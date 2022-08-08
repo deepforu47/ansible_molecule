@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-rockylinux8}-ansible:latest"
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+
+test_sequence:
+  - lint
+  - destroy
+  - dependency
+  - syntax
+  - create
+  - converge
+  - idempotence
+  - verify
+  - destroy
+provisioner:
+  name: ansible
+# verifier:
+#   name: ansible
+verifier:
+  name: testinfra
+  options:
+    sudo: True
