@@ -9,7 +9,7 @@ jobs:
       matrix:
         distro:
           - rockylinux8
-#          - debian10
+          # - debian10
 
     steps:
       - name: Check out the codebase.
@@ -24,11 +24,11 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
-     
+
       - name: Run Molecule tests.
         run: molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-        # working-directory: molecule
+          # working-directory: molecule
