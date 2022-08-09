@@ -9,7 +9,7 @@ jobs:
       matrix:
         distro:
           - rockylinux8
-          - debian10
+#          - debian10
 
     steps:
       - name: Check out the codebase.
