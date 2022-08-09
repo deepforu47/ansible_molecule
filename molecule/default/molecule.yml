@@ -33,4 +33,4 @@ provisioner:
 verifier:
   name: testinfra
   options:
-    sudo: True
+    sudo: true
