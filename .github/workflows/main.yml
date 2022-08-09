@@ -2,25 +2,30 @@
 name: Molecule Test
 on: [push, pull_request]
 jobs:
-  build:
+  test:
+    name: Molecule
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
       matrix:
-        python-version: [3.8, 3.9]
+        distro:
+          - rockylinux8
+          - debian10
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          path: molecule_demo
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.txt
-      - name: Test with molecule
-        run: |
-          molecule test
+          python-version: '3.x'
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[docker] yamllint ansible-lint
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+        working-directory: molecule
