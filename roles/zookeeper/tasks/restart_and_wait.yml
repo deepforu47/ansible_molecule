@@ -1,0 +1,13 @@
+---
+- name: Restart Zookeeper
+  become: true
+  systemd:
+    daemon_reload: true
+    name: "{{zookeeper_service_name}}"
+    state: restarted
+  tags:
+    - systemd
+
+- name: Startup Delay
+  wait_for:
+    timeout: "{{ zookeeper_health_check_delay }}"
