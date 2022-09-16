@@ -3,13 +3,13 @@
   hosts: zookeeper:kafka_broker
   gather_facts: false
   become: true
-  tasks:
-    # - name: Include zookeeper roles
-    #   include_role:
-    #     name: zookeeper
-    # - name: Include kafka_broker roles
-    #   include_role:
-    #     name: kafka_broker
+  # tasks:
+  #   - name: Include zookeeper roles
+  #     include_role:
+  #       name: zookeeper
+  #   - name: Include kafka_broker roles
+  #     include_role:
+  #       name: kafka_broker
 
 - name: Converge zookeeper
   import_playbook: confluent.platform.zookeeper
