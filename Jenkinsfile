@@ -12,7 +12,7 @@ pipeline {
     scm {
         git {
             remote {
-                github('test-owner/test-project')
+                github('github.com/deepforu47/ansible_molecule')
                 refspec('+refs/pull/*:refs/remotes/origin/pr/*')
             }
             branch('${sha1}')
