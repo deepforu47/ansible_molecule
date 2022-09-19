@@ -9,7 +9,6 @@ environment{
     PATH = "$PATH:/usr/local/bin"
 }
 pipeline {
-   
   agent {
     // Node setup : minimal centos7, plugged into Jenkins, and
     // git config --global http.sslVerify false
