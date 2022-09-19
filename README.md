@@ -24,4 +24,6 @@ Or, if you just want to build an environment, have the playbook run inside it, t
 And then, to log into the environment:
 
     molecule login
+    
+Test 1
 
