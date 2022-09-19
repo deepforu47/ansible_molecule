@@ -9,7 +9,7 @@ environment{
     PATH = "$PATH:/usr/local/bin"
 }
 pipeline {
-scm {
+    scm {
         git {
             remote {
                 github('test-owner/test-project')
