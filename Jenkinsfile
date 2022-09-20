@@ -10,12 +10,6 @@ environment{
 }
 pipeline {
   agent {
-    // Node setup : minimal centos7, plugged into Jenkins, and
-    // git config --global http.sslVerify false
-    // sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-    // sudo yum -y install python36u python36u-pip python36u-devel git curl gcc
-    // git config --global http.sslVerify false
-    // sudo curl -fsSL get.docker.com | bash
     label 'Molecule_Slave'
   }
     options {
