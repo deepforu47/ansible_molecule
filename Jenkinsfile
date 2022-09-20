@@ -18,6 +18,9 @@ pipeline {
     environment{
         ANSIBLE_CONFIG = "$HOME/.ansible.cfg"
         PATH = "$PATH:/usr/local/bin"
+        MOLECULE_SCENARIO_NAME = "podman"
+        VERIFIER_NAME = "testinfra"
+        
     }
   stages {
 
