@@ -48,3 +48,7 @@ def test_if_kafka_server_property_file_contains_configuration(host):
 
     assert server_property_file.contains('listener.name.internal.sasl.enabled.mechanisms=PLAIN')
     assert server_property_file.contains('offsets.topic.replication.factor=1')
+   
+def test_if_kafka_log4j_property_file_contains_configuration(host):
+    server_property_file = host.file('/etc/kafka/log4j.properties')
+    assert server_property_file.contains('log4j.rootLogger=INFO, kafkaAppender')

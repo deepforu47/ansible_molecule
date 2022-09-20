@@ -63,7 +63,7 @@ provisioner:
         kafka_broker_service_unit_overrides:
           Description: Custom Kafka description
 
-        kafka_broker_log4j_root_logger: "INFO, kafkaAppender"
+        kafka_broker_log4j_root_logger: "INFO, typo, kafkaAppender"
 
         schema_registry_log4j_root_logger: INFO, file
 
