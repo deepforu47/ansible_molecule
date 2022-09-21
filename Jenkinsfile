@@ -62,7 +62,7 @@ pipeline {
     stage ('Molecule: Test all the matrix') {
       steps {
         sh '''
-            molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAME
+            molecule -c .config/molecule/config.yml test --destroy=never -s $MOLECULE_SCENARIO_NAME
         '''
       }
     }
