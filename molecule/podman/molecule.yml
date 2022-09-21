@@ -63,7 +63,7 @@ provisioner:
         kafka_broker_service_unit_overrides:
           Description: Custom Kafka description
 
-        kafka_broker_log4j_root_logger: "INFO, typo, kafkaAppender"
+        kafka_broker_log4j_root_logger: "INFO, kafkaAppender"
 
         schema_registry_log4j_root_logger: INFO, file
 
@@ -89,4 +89,4 @@ provisioner:
 verifier:
   name: $VERIFIER_NAME
   additional_files_or_dirs:
-    - /Users/kulsharm2/.ansible/collections/ansible_collections/confluent/platform/molecule/podman/tests/*.py
+    - $PWD/molecule/$MOLECULE_SCENARIO_NAME/tests/*.py
