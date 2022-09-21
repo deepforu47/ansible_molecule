@@ -1,11 +1,6 @@
 ---
-driver:
-  name: docker
 provisioner:
   name: ansible
-  env:
-    ANSIBLE_ROLES_PATH: ../../test_roles/
-    ANSIBLE_COLLECTIONS_PATH: ../../
   config_options:
     defaults:
       hash_behaviour: merge
