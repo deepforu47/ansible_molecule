@@ -54,6 +54,7 @@ pipeline {
     stage ('Molecule: Clean up environment') {
       steps {
         sh '''
+            cd /Users/kulsharm2/.ansible/collections/ansible_collections/confluent/platform/  && \
             molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME ;\
             molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
         '''
@@ -62,7 +63,8 @@ pipeline {
     stage ('Molecule: Test all the matrix') {
       steps {
         sh '''
-            molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAME
+            cd /Users/kulsharm2/ansible/molecule_demo
+            just test
         '''
       }
     }
