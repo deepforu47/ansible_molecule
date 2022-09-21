@@ -1,0 +1,8 @@
+---
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      hash_behaviour: merge
+verifier:
+  name: ansible
