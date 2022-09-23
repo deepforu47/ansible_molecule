@@ -9,11 +9,28 @@ trigger:
 pool:
   name: Default
 
+variables:
+- name: ANSIBLE_CONFIG
+  value: "$HOME/.ansible.cfg"
+- name: PATH
+  value: "$PATH:/usr/local/bin"
+- name: MOLECULE_SCENARIO_NAME
+  value: "podman"
+- name: VERIFIER_NAME
+  value: "testinfra"
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    /usr/local/bin/podman -v
+    /usr/local/bin/ansible  --version
+    /usr/local/bin/molecule --version
+  displayName: 'Display versions'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    displayName: 'Molecule: Clean up environment'
+    molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+    molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+
+- script: |
+    displayName: 'Molecule: Test all the matrix'
+    molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
