@@ -26,12 +26,12 @@ variables:
   value: "testinfra"
 
 stages:
-- stage: checkversion
+- stage: ansiblemolecule
   displayName: Ansible Molecule Framework Demo
   # Job list
   jobs:
-  - job: checkversion
-    displayName: Display the tools version
+  - job: ansiblemolecule
+    displayName: Ansible Molecule Tests Execution
 
     steps:
     - script: |
@@ -40,42 +40,42 @@ stages:
         /usr/local/bin/molecule --version
       displayName: 'Display Binaries versions'
     
-  - job: cleanup
-    displayName: Clean up the existing Molecule Instances
+#   - job: cleanup
+#     displayName: Clean up the existing Molecule Instances
 
-    steps:
+#     steps:
     - script: |
         molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
         molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
       workingDirectory: '$(build.sourcesdirectory)'
       displayName: 'Molecule: Clean up environment'
 
-  - job: lint
-    displayName: Lint all the Ansible Roles/Playbooks
-    steps:
+#   - job: lint
+#     displayName: Lint all the Ansible Roles/Playbooks
+#     steps:
     - script: |
-        molecule -c .config/molecule/config.yml --debug converge -s $MOLECULE_SCENARIO_NAME
-      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+        molecule -c .config/molecule/config.yml --debug lint -s $MOLECULE_SCENARIO_NAME
+      displayName: 'Molecule: Lint all the Ansible Roles/Playbooks'
       workingDirectory: '$(build.sourcesdirectory)'
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
-  - job: converge
-    displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
-    steps:
+#   - job: converge
+#     displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
+#     steps:
     - script: |
         molecule -c .config/molecule/config.yml --debug converge -s $MOLECULE_SCENARIO_NAME
-      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+      displayName: 'Molecule: Create Ephemeral Environment by executing the Ansible Roles/Playbooks'
       workingDirectory: '$(build.sourcesdirectory)'
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
-  - job: verify
-    displayName: Run the Testing automation on existing setup
-    steps:
+#   - job: verify
+#     displayName: Run the Testing automation on existing setup
+#     steps:
     - script: |
         molecule -c .config/molecule/config.yml --debug verify -s $MOLECULE_SCENARIO_NAME
-      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+      displayName: 'Molecule: Run the Testing automation on existing setup'
       workingDirectory: '$(build.sourcesdirectory)'
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
