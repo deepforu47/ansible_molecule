@@ -10,8 +10,6 @@ pool:
   name: Default
 
 variables:
-- name: ANSIBLE_CONFIG
-  value: "$HOME/.ansible.cfg"
 - name: PATH
   value: "$PATH:/usr/local/bin"
 - name: MOLECULE_SCENARIO_NAME
