@@ -27,10 +27,10 @@ steps:
   displayName: 'Display versions'
 
 - script: |
-    molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
-    molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+    echo ${Build.SourcesDirectory} ; cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+    echo ${Build.SourcesDirectory} ; cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
   displayName: 'Molecule: Clean up environment'
 
 - script: |
-    molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
+    echo ${Build.SourcesDirectory} ; cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
   displayName: 'Molecule: Test all the matrix'
