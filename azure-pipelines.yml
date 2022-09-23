@@ -10,14 +10,14 @@ pool:
   name: Default
 
 variables:
+- name: ANSIBLE_CONFIG
+  value: "$HOME/.ansible.cfg"
 - name: PATH
   value: "$PATH:/usr/local/bin"
 - name: MOLECULE_SCENARIO_NAME
   value: "podman"
 - name: VERIFIER_NAME
   value: "testinfra"
-- name: ANSIBLE_REMOTE_TEMP
-  value: /tmp
 
 # steps:
 # - script: |
