@@ -39,13 +39,6 @@ stages:
         /usr/local/bin/ansible  --version
         /usr/local/bin/molecule --version
       displayName: 'Display Binaries versions'
-
-    - script: |
-        molecule -c .config/molecule/config.yml --debug test -s $MOLECULE_SCENARIO_NAME --destroy=never
-      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
-      workingDirectory: '$(build.sourcesdirectory)'
-      env:
-        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
     
   - job: cleanup
     displayName: Clean up the existing Molecule Instances
@@ -78,7 +71,7 @@ stages:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
   - job: verify
-    displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
+    displayName: Run the Testing automation on existing setup
     steps:
     - script: |
         molecule -c .config/molecule/config.yml --debug verify -s $MOLECULE_SCENARIO_NAME
