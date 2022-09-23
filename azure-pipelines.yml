@@ -3,8 +3,14 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
+# trigger:
+# - master
+# specific branch
+pr:
+  branches:
+    include:
+    - master
+    - feature/*
 
 pool:
   name: Default
@@ -19,44 +25,20 @@ variables:
 - name: VERIFIER_NAME
   value: "testinfra"
 
-# steps:
-# - script: |
-#     /usr/local/bin/podman -v
-#     /usr/local/bin/ansible  --version
-#     /usr/local/bin/molecule --version
-#   displayName: 'Display versions'
-
-# - script: |
-#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
-#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
-#   displayName: 'Molecule: Clean up environment'
-
-# - script: |
-#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
-#   displayName: 'Molecule: Test all the matrix'
-
 stages:
 - stage: checkversion
   displayName: Ansible Molecule Framework Demo
   # Job list
   jobs:
   - job: checkversion
-    displayName: Execute Ansible tests using Molecules
+    displayName: Display the tools version
 
     steps:
-
     - script: |
         /usr/local/bin/podman -v
         /usr/local/bin/ansible  --version
         /usr/local/bin/molecule --version
       displayName: 'Display Binaries versions'
-
-    # - script: |
-    #     molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
-    #     molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
-    #   workingDirectory: '$(build.sourcesdirectory)'
-    #   displayName: 'Molecule: Clean up environment'
-      
 
     - script: |
         molecule -c .config/molecule/config.yml --debug test -s $MOLECULE_SCENARIO_NAME --destroy=never
@@ -64,4 +46,43 @@ stages:
       workingDirectory: '$(build.sourcesdirectory)'
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
+    
+  - job: cleanup
+    displayName: Clean up the existing Molecule Instances
 
+    steps:
+    - script: |
+        molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+        molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+      workingDirectory: '$(build.sourcesdirectory)'
+      displayName: 'Molecule: Clean up environment'
+
+  - job: lint
+    displayName: Lint all the Ansible Roles/Playbooks
+    steps:
+    - script: |
+        molecule -c .config/molecule/config.yml --debug converge -s $MOLECULE_SCENARIO_NAME
+      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+      workingDirectory: '$(build.sourcesdirectory)'
+      env:
+        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
+
+  - job: converge
+    displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
+    steps:
+    - script: |
+        molecule -c .config/molecule/config.yml --debug converge -s $MOLECULE_SCENARIO_NAME
+      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+      workingDirectory: '$(build.sourcesdirectory)'
+      env:
+        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
+
+  - job: verify
+    displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
+    steps:
+    - script: |
+        molecule -c .config/molecule/config.yml --debug verify -s $MOLECULE_SCENARIO_NAME
+      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
+      workingDirectory: '$(build.sourcesdirectory)'
+      env:
+        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
