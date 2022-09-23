@@ -38,13 +38,13 @@ stages:
         /usr/local/bin/molecule --version
       displayName: 'Display Binaries versions'
     
-    - script: |
-        molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
-        molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
-      workingDirectory: '$(build.sourcesdirectory)'
-      displayName: 'Molecule: Clean up environment'
-      env:
-        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
+    # - script: |
+    #     molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+    #     molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+    #   workingDirectory: '$(build.sourcesdirectory)'
+    #   displayName: 'Molecule: Clean up environment'
+    #   env:
+    #     ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
     - script: |
         molecule -c .config/molecule/config.yml --debug lint -s $MOLECULE_SCENARIO_NAME
