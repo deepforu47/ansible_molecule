@@ -16,8 +16,6 @@ pool:
   name: Default
 
 variables:
-- name: ANSIBLE_CONFIG
-  value: "$HOME/.ansible.cfg"
 - name: PATH
   value: "$PATH:/usr/local/bin"
 - name: MOLECULE_SCENARIO_NAME
@@ -40,19 +38,14 @@ stages:
         /usr/local/bin/molecule --version
       displayName: 'Display Binaries versions'
     
-#   - job: cleanup
-#     displayName: Clean up the existing Molecule Instances
-
-#     steps:
     - script: |
         molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
         molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
       workingDirectory: '$(build.sourcesdirectory)'
       displayName: 'Molecule: Clean up environment'
+      env:
+        ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
-#   - job: lint
-#     displayName: Lint all the Ansible Roles/Playbooks
-#     steps:
     - script: |
         molecule -c .config/molecule/config.yml --debug lint -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Lint all the Ansible Roles/Playbooks'
@@ -60,9 +53,7 @@ stages:
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
-#   - job: converge
-#     displayName: Create Ephemeral Environment by executing the Ansible Roles/Playbooks
-#     steps:
+
     - script: |
         molecule -c .config/molecule/config.yml --debug converge -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Create Ephemeral Environment by executing the Ansible Roles/Playbooks'
@@ -70,9 +61,6 @@ stages:
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
 
-#   - job: verify
-#     displayName: Run the Testing automation on existing setup
-#     steps:
     - script: |
         molecule -c .config/molecule/config.yml --debug verify -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Run the Testing automation on existing setup'
