@@ -60,5 +60,8 @@ stages:
 
     - script: |
         molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
+      env:
+        MOLECULE_SCENARIO_NAMEE: "podman"
       displayName: 'Molecule: Test all the matrix'
       workingDirectory: '$(build.sourcesdirectory)'     
+
