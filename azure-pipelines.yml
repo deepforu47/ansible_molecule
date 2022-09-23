@@ -19,21 +19,21 @@ variables:
 - name: VERIFIER_NAME
   value: "testinfra"
 
-steps:
-- script: |
-    /usr/local/bin/podman -v
-    /usr/local/bin/ansible  --version
-    /usr/local/bin/molecule --version
-  displayName: 'Display versions'
+# steps:
+# - script: |
+#     /usr/local/bin/podman -v
+#     /usr/local/bin/ansible  --version
+#     /usr/local/bin/molecule --version
+#   displayName: 'Display versions'
 
-- script: |
-    cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
-    cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
-  displayName: 'Molecule: Clean up environment'
+# - script: |
+#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+#   displayName: 'Molecule: Clean up environment'
 
-- script: |
-    cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
-  displayName: 'Molecule: Test all the matrix'
+# - script: |
+#     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
+#   displayName: 'Molecule: Test all the matrix'
 
 stages:
 - stage: Version Test
@@ -52,14 +52,13 @@ stages:
       displayName: 'Display versions'
 
     - script: |
+        dir '$(build.sourcesdirectory)'
         molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
         molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Clean up environment'
-      inputs:
-        workingDir: '$(build.sourcesdirectory)'
+      
 
     - script: |
-        cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
-      displayName: 'Molecule: Test all the matrix'
-      inputs:
-        workingDir: '$(build.sourcesdirectory)'      
+        dir '$(build.sourcesdirectory)'
+        molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
+      displayName: 'Molecule: Test all the matrix'     
