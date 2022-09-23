@@ -34,3 +34,32 @@ steps:
 - script: |
     cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
   displayName: 'Molecule: Test all the matrix'
+
+stages:
+- stage: Version Test
+  displayName: Display versions
+  # Job list
+  jobs:
+  - job: Version_Test
+    displayName: Display Version for required tools
+
+    steps:
+
+    - script: |
+        /usr/local/bin/podman -v
+        /usr/local/bin/ansible  --version
+        /usr/local/bin/molecule --version
+      displayName: 'Display versions'
+
+    - script: |
+        molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
+        molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+      displayName: 'Molecule: Clean up environment'
+      inputs:
+        workingDir: '$(build.sourcesdirectory)'
+
+    - script: |
+        cd ${Build.SourcesDirectory} ; molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
+      displayName: 'Molecule: Test all the matrix'
+      inputs:
+        workingDir: '$(build.sourcesdirectory)'      
