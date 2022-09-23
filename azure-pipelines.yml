@@ -18,6 +18,8 @@ variables:
   value: "podman"
 - name: VERIFIER_NAME
   value: "testinfra"
+- name: ANSIBLE_REMOTE_TEMP
+  value: /tmp
 
 # steps:
 # - script: |
