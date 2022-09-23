@@ -59,7 +59,7 @@ stages:
       
 
     - script: |
-        molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAME --destroy=never
+        molecule -c .config/molecule/config.yml --debug test -s $MOLECULE_SCENARIO_NAME --destroy=never
       displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
       workingDirectory: '$(build.sourcesdirectory)'     
 
