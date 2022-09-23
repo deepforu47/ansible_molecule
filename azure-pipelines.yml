@@ -40,7 +40,7 @@ stages:
   displayName: Display versions
   # Job list
   jobs:
-  - job: Version_Test
+  - job: VersionTest
     displayName: Display Version for required tools
 
     steps:
@@ -52,13 +52,13 @@ stages:
       displayName: 'Display versions'
 
     - script: |
-        dir '$(build.sourcesdirectory)'
+        workingDirectory '$(build.sourcesdirectory)'
         molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
         molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Clean up environment'
       
 
     - script: |
-        dir '$(build.sourcesdirectory)'
+        workingDirectory '$(build.sourcesdirectory)'
         molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
       displayName: 'Molecule: Test all the matrix'     
