@@ -4,5 +4,6 @@ provisioner:
   config_options:
     defaults:
       hash_behaviour: merge
+      ansible_remote_tmp: /tmp
 verifier:
   name: ansible
