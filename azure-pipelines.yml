@@ -36,11 +36,11 @@ variables:
 #   displayName: 'Molecule: Test all the matrix'
 
 stages:
-- stage: Version Test
+- stage: Check Version
   displayName: Display versions
   # Job list
   jobs:
-  - job: VersionTest
+  - job: checkversion
     displayName: Display Version for required tools
 
     steps:
