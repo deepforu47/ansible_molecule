@@ -37,11 +37,11 @@ variables:
 
 stages:
 - stage: checkversion
-  displayName: Display versions
+  displayName: Ansible Molecule Framework Demo
   # Job list
   jobs:
   - job: checkversion
-    displayName: Display Version for required tools
+    displayName: Execute Ansible tests using Molecules
 
     steps:
 
@@ -49,7 +49,7 @@ stages:
         /usr/local/bin/podman -v
         /usr/local/bin/ansible  --version
         /usr/local/bin/molecule --version
-      displayName: 'Display versions'
+      displayName: 'Display Binaries versions'
 
     # - script: |
     #     molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
@@ -59,9 +59,7 @@ stages:
       
 
     - script: |
-        molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
-      env:
-        MOLECULE_SCENARIO_NAMEE: "podman"
-      displayName: 'Molecule: Test all the matrix'
+        molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAME --destroy=never
+      displayName: 'Molecule: Test Ansbile Molecule $MOLECULE_SCENARIO_NAME scenario'
       workingDirectory: '$(build.sourcesdirectory)'     
 
