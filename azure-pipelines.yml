@@ -52,13 +52,13 @@ stages:
       displayName: 'Display versions'
 
     - script: |
-        workingDirectory '$(build.sourcesdirectory)'
         molecule -c .config/molecule/config.yml cleanup -s $MOLECULE_SCENARIO_NAME 
         molecule -c .config/molecule/config.yml destroy -s $MOLECULE_SCENARIO_NAME
+      workingDirectory: '$(build.sourcesdirectory)'
       displayName: 'Molecule: Clean up environment'
       
 
     - script: |
-        workingDirectory '$(build.sourcesdirectory)'
         molecule -c .config/molecule/config.yml test -s $MOLECULE_SCENARIO_NAMEE
-      displayName: 'Molecule: Test all the matrix'     
+      displayName: 'Molecule: Test all the matrix'
+      workingDirectory: '$(build.sourcesdirectory)'     
