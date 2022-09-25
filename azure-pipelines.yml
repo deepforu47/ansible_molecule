@@ -75,4 +75,5 @@ stages:
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
         ANSIBLE_REMOTE_PATH: /tmp
+        ANSIBLE_REMOTE_TMP: /tmp
         VERIFIER_NAME: "testinfra"  
