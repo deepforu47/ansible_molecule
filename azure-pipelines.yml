@@ -74,3 +74,4 @@ stages:
       workingDirectory: '$(build.sourcesdirectory)'
       env:
         ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
+        ANSIBLE_REMOTE_PATH: /tmp
