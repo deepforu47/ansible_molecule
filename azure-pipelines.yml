@@ -69,7 +69,7 @@ stages:
     #     ANSIBLE_CONFIG: "$HOME/.ansible.cfg"
     
     - script: |
-        molecule -c .config/molecule/config.yml --debug test --destroy=never -s $MOLECULE_SCENARIO_NAME
+        ANSIBLE_VERBOSE=5 /usr/local/bin/molecule -c .config/molecule/config.yml --debug test --destroy=never -s $MOLECULE_SCENARIO_NAME
       displayName: 'Molecule: Run the full tests'
       workingDirectory: '$(build.sourcesdirectory)'
       env:
