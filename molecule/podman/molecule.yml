@@ -87,6 +87,6 @@ provisioner:
 
         control_center_log4j_root_logger: INFO, stdout, main
 verifier:
-  name: $MOLECULE_VERIFIER_NAME
+  name: testinfra
   additional_files_or_dirs:
     - $PWD/molecule/$MOLECULE_SCENARIO_NAME/tests/*.py
